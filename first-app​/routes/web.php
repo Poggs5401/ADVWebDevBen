@@ -21,5 +21,9 @@ Route::get('/home', function () {
     return view ('home', ['name' => "Bonk"]);
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+
 
 
