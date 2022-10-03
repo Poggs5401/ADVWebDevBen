@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,20 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [PageController::class, 'home'])->name('home');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::get('/home', function () {
-//     return view('home');
-// });
-
-Route::get('/contactus', [PageController::class, 'contactus'])->name('contactus');
-
-// Route::get('/contactus', function () {
-//     return view('contactus');
-// });
-
-Route::get('/aboutus', [PageController::class, 'aboutus'])->name('aboutus');
-
-// Route::get('/aboutus', function () {
-//     return view('aboutus');
-// });
+require __DIR__.'/auth.php';
