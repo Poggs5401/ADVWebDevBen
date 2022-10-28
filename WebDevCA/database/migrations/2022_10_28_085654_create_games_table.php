@@ -14,12 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('games', function (Blueprint $table) {
-
             $table->id();
             $table->string('title');
             $table->string('category');
             $table->string('publisher');
-            // $table->string('description');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::drop('games');
+        Schema::dropIfExists('games');
     }
 };
