@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -13,7 +17,13 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        //Fetch Games in order of last updated by user
+        // $games = Game::where('user_id', Auth::id())->latest('updated_at')->paginate(1);
+
+        //Fetch all Games regardless of User
+        $games = Game::paginate(10);
+
+        return view('games.index')->with('games', $games);
     }
 
     /**
