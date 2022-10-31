@@ -33,7 +33,7 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        return view('games.create');
     }
 
     /**
@@ -44,7 +44,22 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:120',
+            'category' => 'required|max:50',
+            'publisher' => 'required|max:50',
+            'description' =>'required|max:500'
+        ]);
+
+Game::create([
+    'title' => $request->title,
+    'category' => $request->category,
+    'publisher' => $request->publisher,
+    'description' => $request->description
+]);
+
+return to_route('games.index');
+
     }
 
     /**
