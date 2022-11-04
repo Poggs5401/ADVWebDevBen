@@ -33,6 +33,7 @@ class GameController extends Controller
      */
     public function create()
     {
+        //Returns the create view using the linked database parameters
         return view('games.create');
     }
 
@@ -44,22 +45,35 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
+        //Validates the information being stored by the system
         $request->validate([
             'title' => 'required|max:120',
             'category' => 'required|max:50',
             'publisher' => 'required|max:50',
-            'description' =>'required|max:500'
+            'description' => 'required|max:500',
+            // 'book_image' => 'file|image'
         ]);
 
-Game::create([
-    'title' => $request->title,
-    'category' => $request->category,
-    'publisher' => $request->publisher,
-    'description' => $request->description
-]);
+        // //Requests and stores the image file for each game entry
+        // $game_image = $request->file('game_image');
+        // $extension = $game_image->getClientOriginalExtension();
 
-return to_route('games.index');
+        //Ensures that every filename is unique
+        // $filename = date('Y-m-d-His') . '_' . $request->input('title') . '.' . $extension;
 
+        // $path = $game_image->storeAs('public/images', $filename);
+
+        //Adds the validated data to the table as a new row 
+        Game::create([
+            'title' => $request->title,
+            'category' => $request->category,
+            'publisher' => $request->publisher,
+            'description' => $request->description,
+            // 'game_image' => $filename
+        ]);
+
+        //Returns the user to the index page
+        return to_route('games.index')->with('success', 'Game created successfully');;
     }
 
     /**
@@ -68,9 +82,10 @@ return to_route('games.index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Game $game)
     {
-        //
+        //Returns the show view using the linked database parameters
+        return view('games.show')->with('game', $game);
     }
 
     /**
@@ -79,9 +94,10 @@ return to_route('games.index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Game $game)
     {
-        //
+        //Returns the edit view using the linked database parameters
+        return view('games.edit')->with('game', $game);
     }
 
     /**
@@ -91,9 +107,36 @@ return to_route('games.index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Game $game)
     {
-        //
+
+        //Validates the information being sent through the system
+        $request->validate([
+            'title' => 'required',
+            'category' => 'required',
+            'publisher' => 'required',
+            'description' => 'required|max:500',
+            // 'game_image' => 'file|image'
+        ]);
+
+        // $game_image = $request->file('game_image');
+        // $extension = $game_image->getClientOriginalExtension();
+        // $filename = date('Y-m-d-His') . '_' . $request->input('title') . '.' . $extension;
+
+        // // Stores the game's image in /public/images, and names it $filename
+        // $path = $game_image->storeAs('public/images', $filename);
+
+        //Sends the validated inputs through to the database, replacing the old data
+        $game->update([
+            'title' => $request->title,
+            'category' => $request->category,
+            'publisher' => $request->publisher,
+            'description' => $request->description,
+            // 'game_image' => $filename,
+        ]);
+
+        //Once the request succeeds the user is sent back to the show page with the freshly updated information
+        return to_route('games.show', $game)->with('success', 'Game updated successfully');
     }
 
     /**
@@ -102,8 +145,10 @@ return to_route('games.index');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Game $game)
     {
-        //
+        $game->delete();
+
+        return to_route('games.index')->with('success', 'Game deleted successfully');
     }
 }
