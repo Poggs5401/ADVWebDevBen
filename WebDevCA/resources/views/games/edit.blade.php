@@ -48,7 +48,7 @@
 
                 <x-file-input
                     type="file"
-                    name="Game_image"
+                    name="game_image"
                     placeholder="Game"
                     class="w-full mt-6"
                     field="game_image">

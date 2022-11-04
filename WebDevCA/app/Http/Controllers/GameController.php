@@ -51,26 +51,26 @@ class GameController extends Controller
             'category' => 'required|max:50',
             'publisher' => 'required|max:50',
             'description' => 'required|max:500',
-            // 'book_image' => 'file|image'
+            'game_image' => 'file|image'
         ]);
 
-        // //Requests and stores the image file for each game entry
-        // $game_image = $request->file('game_image');
-        // $extension = $game_image->getClientOriginalExtension();
+        //Requests and stores the image file for each game entry
+        $game_image = $request->file('game_image');
+        $extension = $game_image->getClientOriginalExtension();
 
-        //Ensures that every filename is unique
-        // $filename = date('Y-m-d-His') . '_' . $request->input('title') . '.' . $extension;
+        // Ensures that every filename is unique
+        $filename = date('Y-m-d-His') . '_' . $request->input('title') . '.' . $extension;
 
-        // $path = $game_image->storeAs('public/images', $filename);
+        $path = $game_image->storeAs('public/images', $filename);
 
         //Adds the validated data to the table as a new row 
-        Game::create([
-            'title' => $request->title,
-            'category' => $request->category,
-            'publisher' => $request->publisher,
-            'description' => $request->description,
-            // 'game_image' => $filename
-        ]);
+        $game = new Game;
+        $game->title = $request->title;
+        $game->category = $request->category;
+        $game->publisher = $request->publisher;
+        $game->description = $request->description;
+        $game->game_image = $filename;
+        $game->save();
 
         //Returns the user to the index page
         return to_route('games.index')->with('success', 'Game created successfully');;
@@ -109,6 +109,7 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
+      
 
         //Validates the information being sent through the system
         $request->validate([
@@ -116,24 +117,23 @@ class GameController extends Controller
             'category' => 'required',
             'publisher' => 'required',
             'description' => 'required|max:500',
-            // 'game_image' => 'file|image'
+            'game_image' => 'file|image'
         ]);
 
-        // $game_image = $request->file('game_image');
-        // $extension = $game_image->getClientOriginalExtension();
-        // $filename = date('Y-m-d-His') . '_' . $request->input('title') . '.' . $extension;
 
-        // // Stores the game's image in /public/images, and names it $filename
-        // $path = $game_image->storeAs('public/images', $filename);
+        $game_image = $request->file('game_image');
+        $extension = $game_image->getClientOriginalExtension();
+        $filename = date('Y-m-d-His') . '_' . $request->input('title') . '.' . $extension;
+
+        // Stores the game's image in /public/images, and names it $filename
+        $path = $game_image->storeAs('public/images', $filename);
 
         //Sends the validated inputs through to the database, replacing the old data
-        $game->update([
-            'title' => $request->title,
-            'category' => $request->category,
-            'publisher' => $request->publisher,
-            'description' => $request->description,
-            // 'game_image' => $filename,
-        ]);
+        $game->title = $request->title;
+        $game->category = $request->category;
+        $game->publisher = $request->publisher;
+        $game->game_image = $filename;
+        $game->save();
 
         //Once the request succeeds the user is sent back to the show page with the freshly updated information
         return to_route('games.show', $game)->with('success', 'Game updated successfully');

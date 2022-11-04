@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('publisher');
             $table->text('description');
+            $table->string('game_image');
             $table->timestamps();
         });
     }
