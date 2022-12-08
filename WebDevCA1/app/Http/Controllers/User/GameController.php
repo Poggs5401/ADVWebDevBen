@@ -4,6 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Game;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class GameController extends Controller
 {
@@ -25,7 +28,7 @@ class GameController extends Controller
         // $user = Auth::user();
         // $user->authorizeRoles('admin');
 
-        $games = Game::paginate(10);
+        $games = Game::with('publisher')->with('developers')->get();
 
         return view('user.games.index')->with('games', $games);
     }

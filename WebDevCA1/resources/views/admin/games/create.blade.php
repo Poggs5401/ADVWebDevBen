@@ -20,8 +20,25 @@
 
                     <x-file-input type="file" name="game_image" placeholder="Game" class="w-full mt-6" field="game_image">
                     </x-file-input>
+                    <div class="form-group">
+                        <label for="publisher">Publisher</label>
+                        <select name="publisher_id">
+                            @foreach ($publishers as $publisher)
+                            <option value="{{$publisher->id}}" {{(old('publisher_id') == $publisher->id) ? "selected" : ""}}>
+                                {{$publisher->name}}
+                            </option>
+                            @endforeach
+                        </select>
 
-                    <x-primary-button class="mt-6">Save Game</x-primary-button>
+                        <div class="form-group">
+                            <label for="developers"> <strong> Developers</strong> <br> </label>
+                            @foreach ($developers as $developer)
+                            <input type="checkbox" , value="{{$developer->id}}" name="developers[]">
+                            {{$developer->name}}
+                            @endforeach
+                        </div>
+
+                        <x-primary-button class="mt-6">Save Game</x-primary-button>
                 </form>
             </div>
         </div>

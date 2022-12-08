@@ -23,10 +23,10 @@
                 <table class="table table-hover">
                     <tbody>
                         <tr>
-                        <td rowspan="6">
-                            <!-- use the asset function, access the file $book->book_image in the folder storage/images -->
-                            <img src="{{asset('storage/images/' . $game->game_image) }}" width="150" />
-                        </td>
+                            <td rowspan="6">
+                                <!-- use the asset function, access the file $book->book_image in the folder storage/images -->
+                                <img src="{{asset('storage/images/' . $game->game_image) }}" width="150" />
+                            </td>
                         </tr>
                         <tr>
                             <td class="font-bold ">Title </td>
@@ -37,13 +37,26 @@
                             <td>{{ $game->category }}</td>
                         </tr>
                         <tr>
-                            <td class="font-bold">Publisher </td>
-                            <td>{{ $game->publisher }}</td>
+                            <td class="font-bold ">Publisher Name </td>
+                            <td>{{ $game->publisher->name }}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="font-bold ">Publisher Address </td>
+                            <td>{{ $game->publisher->address }}</td>
                         </tr>
                         <tr>
                             <td class="font-bold ">Description </td>
                             <td>{{ $game->description }}</td>
                         </tr>
+
+                        @foreach ($game->developers as $developer)
+                        <tr>
+                            <td class="font-bold ">Developer </td>
+                            <td> {{$developer->name }}</td>
+                        </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>

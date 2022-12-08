@@ -17,11 +17,10 @@
                 </h2>
                 <br>
                 <p class="mt-2">
-                    {{ $game->category }}
-                </p>
-                <br>
-                <p>
-                    {{$game->publisher}}
+                <h3 class="font-bold text-1xl"> <strong> Publisher Name </strong>
+                    {{$game->publisher->name}}
+                </h3>
+                {{ $game->category }}
                 </p>
                 <br>
                 <p>
@@ -41,7 +40,7 @@
             </div>
             @endforelse
             <!-- This line of code simply adds the links for Pagination-->
-            {{$games->links()}}
+
         </div>
     </div>
 </x-app-layout>

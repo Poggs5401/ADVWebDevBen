@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Game;
+use App\Models\Publisher;
+use App\Models\Developer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +29,8 @@ class GameController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        $games = Game::paginate(10);
+        $games = Game::with('publisher')->with('developers')->get();
+
 
         return view('admin.games.index')->with('games', $games);
     }
@@ -41,8 +44,11 @@ class GameController extends Controller
     {
         $user = Auth::user();
         $user->authorizeRoles('admin');
+        //Returns the create view with the publishers passed through it
+        $publishers = Publisher::all();
+        $developers = Developer::all();
+        return view('admin.games.create')->with('publishers', $publishers)->with('developers', $developers);
         //Returns the create view using the linked database parameters
-        return view('admin.games.create');
     }
 
     /**
@@ -61,9 +67,10 @@ class GameController extends Controller
         $request->validate([
             'title' => 'required|max:120',
             'category' => 'required|max:50',
-            'publisher' => 'required|max:50',
             'description' => 'required|max:500',
-            'game_image' => 'file|image'
+            'game_image' => 'file|image',
+            'publisher_id' => 'required',
+            'authors' => ['required', 'exists:authors,id']
         ]);
 
         //Requests and stores the image file for each game entry
@@ -79,13 +86,15 @@ class GameController extends Controller
         $game = new Game;
         $game->title = $request->title;
         $game->category = $request->category;
-        $game->publisher = $request->publisher;
         $game->description = $request->description;
         $game->game_image = $filename;
+        $game->publisher_id = $request->publisher_id;
         $game->save();
 
+        $game->developers()->attach($request->developers);
+
         //Returns the user to the index page
-        return to_route('admin.games.index')->with('success', 'Game created successfully');;
+        return to_route('admin.games.index')->with('success', 'Game created successfully');
     }
 
     /**
@@ -139,7 +148,7 @@ class GameController extends Controller
             'category' => 'required',
             'publisher' => 'required',
             'description' => 'required|max:500',
-            'game_image' => 'file|image'
+            'game_image' => 'file|image',
         ]);
 
 

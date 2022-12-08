@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-       /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -31,11 +31,23 @@ class HomeController extends Controller
         $user = Auth::user();
         $home = 'home';
 
-        if($user->hasRole('admin')){
+        if ($user->hasRole('admin')) {
             $home = 'admin.games.index';
-        }
-        else if ($user->hasRole('user')){
+        } else if ($user->hasRole('user')) {
             $home = 'user.games.index';
+        }
+        return redirect()->route($home);
+    }
+    public function publisherIndex(Request $request)
+    {
+
+        $user = Auth::user();
+        $home = 'home';
+
+        if ($user->hasRole('admin')) {
+            $home = 'admin.publishers.index';
+        } else if ($user->hasRole('user')) {
+            $home = 'user.publishers.index';
         }
         return redirect()->route($home);
     }

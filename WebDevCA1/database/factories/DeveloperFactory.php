@@ -17,9 +17,9 @@ class DeveloperFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->word,
-            'category' => $this->faker->text(50),
-            'description' => $this->faker->text(200),
+            'name' => $this->faker->name,
+            'address' => $this->faker->address,
+            'about' => $this->faker->realText
         ];
     }
 }

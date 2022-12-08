@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     use HasFactory;
-    protected $guarded = []; public function publisher()
+    protected $guarded = [];
+
+    public function publisher()
     {
         return $this->belongsTo(Publisher::class);
     }
 
-
-
+    public function developers()
+    {
+        return $this->belongstoMany(Developer::class)->withTimestamps();
+    }
 }
