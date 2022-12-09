@@ -19,7 +19,7 @@ class GameFactory extends Factory
         return [
             'title' => $this->faker->word,
             'category' => $this->faker->text(50),
-            'game_image' => $this->faker->text(25),
+            'game_image' => $this->faker->image(storage_path('storage\app/public/images'), 150, 150),
             'description' => $this->faker->text(200),
 
         ];

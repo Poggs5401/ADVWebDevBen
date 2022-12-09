@@ -70,7 +70,7 @@ class GameController extends Controller
             'description' => 'required|max:500',
             'game_image' => 'file|image',
             'publisher_id' => 'required',
-            'authors' => ['required', 'exists:authors,id']
+            'developers' => ['required', 'exists:developers,id']
         ]);
 
         //Requests and stores the image file for each game entry
@@ -126,7 +126,10 @@ class GameController extends Controller
         $user->authorizeRoles('admin');
 
         //Returns the edit view using the linked database parameters
-        return view('admin.games.edit')->with('game', $game);
+        $publishers = Publisher::all();
+        $developers = Developer::all();
+
+        return view('admin.games.edit')->with('game', $game)->with('publishers',$publishers)->with('developers', $developers);
     }
 
     /**
@@ -146,7 +149,7 @@ class GameController extends Controller
         $request->validate([
             'title' => 'required',
             'category' => 'required',
-            'publisher' => 'required',
+            'publisher_id' => 'required',
             'description' => 'required|max:500',
             'game_image' => 'file|image',
         ]);
@@ -162,7 +165,8 @@ class GameController extends Controller
         //Sends the validated inputs through to the database, replacing the old data
         $game->title = $request->title;
         $game->category = $request->category;
-        $game->publisher = $request->publisher;
+        $game->publisher_id = $request->publisher_id;
+        $game->description = $request->description;
         $game->game_image = $filename;
         $game->save();
 
@@ -182,6 +186,8 @@ class GameController extends Controller
         $user->authorizeRoles('admin');
 
         $game->delete();
+
+
 
         return to_route('admin.games.index')->with('success', 'Game deleted successfully');
     }

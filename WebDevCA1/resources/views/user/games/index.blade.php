@@ -20,7 +20,9 @@
                 <h3 class="font-bold text-1xl"> <strong> Publisher Name </strong>
                     {{$game->publisher->name}}
                 </h3>
+                <h3 class="font-bold text-1xl"> <strong> Category </strong>
                 {{ $game->category }}
+                </h3>
                 </p>
                 <br>
                 <p>

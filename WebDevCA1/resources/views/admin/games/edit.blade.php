@@ -12,48 +12,26 @@
                 <form action="{{ route('admin.games.update', $game) }}" method="post" enctype="multipart/form-data">
                     @method('put')
                     @csrf
-                    <x-text-input
-                    type="text"
-                    name="title"
-                    field="title"
-                    placeholder="Title"
-                    class="w-full"
-                    autocomplete="off"
-                    :value="@old('title',$game->title)"
-                   ></x-text-input>
+                    <x-text-input type="text" name="title" field="title" placeholder="Title" class="w-full" autocomplete="off" :value="@old('title',$game->title)"></x-text-input>
 
-                <x-text-input
-                    type="text"
-                    name="category"
-                    field="category"
-                    placeholder="category..."
-                    class="w-full mt-6"
-                    :value="@old('category', $game->category)"></x-text-input>
+                    <x-text-input type="text" name="category" field="category" placeholder="category..." class="w-full mt-6" :value="@old('category', $game->category)"></x-text-input>
 
-                    <x-text-input
-                    type="text"
-                    name="publisher"
-                    field="publisher"
-                    placeholder="Publisher..."
-                    class="w-full mt-6"
-                    :value="@old('publisher',$game->publisher)"></x-text-input>
+                    <div class="form-group">
+                        <label for="publisher">Publisher</label>
+                        <select name="publisher_id">
+                            @foreach ($publishers as $publisher)
+                            <option value="{{$publisher->id}}" {{(old('publisher_id') == $publisher->id) ? "selected" : ""}}>
+                                {{$publisher->name}}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <x-textarea
-                    name="description"
-                    rows="10"
-                    field="description"
-                    placeholder="Description..."
-                    class="w-full mt-6"
-                    :value="@old('description', $game->description)"></x-textarea>
+                    <x-textarea name="description" rows="10" field="description" placeholder="Description..." class="w-full mt-6" :value="@old('description', $game->description)"></x-textarea>
 
-                <x-file-input
-                    type="file"
-                    name="game_image"
-                    placeholder="Game"
-                    class="w-full mt-6"
-                    field="game_image">
-                </x-file-input>
-               <x-primary-button class="mt-6">Save Game</x-primary-button>
+                    <x-file-input type="file" name="game_image" placeholder="Game" class="w-full mt-6" field="game_image">
+                    </x-file-input>
+                    <x-primary-button class="mt-6">Save Game</x-primary-button>
                 </form>
             </div>
         </div>

@@ -13,21 +13,27 @@
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
 
                 <h2 class="font-bold text-2xl">
-                    <a href="{{ route('admin.games.show', $game) }}">{{ $game->title }}</a>
+                    <a href="{{ route('admin.games.show', $game) }}"><strong>{{ $game->title }}</strong></a>
                 </h2>
                 <br>
                 <p class="mt-2">
                 <h3 class="font-bold text-1xl"> <strong> Publisher Name </strong>
                     {{$game->publisher->name}}
                 </h3>
+                <h3 class="font-bold text-1xl"> <strong> Category </strong>
                 {{ $game->category }}
+                </h3>
                 </p>
                 <br>
                 <p>
                     {{$game->description}}
                 </p>
                 <br>
-                <img src="{{asset('public/images/' . $game->game_image) }}" width="150" />
+                <td rowspan="6">
+                    <!-- use the asset function, access the file $book->book_image in the folder storage/images -->
+                    <img src="{{asset('storage/images/' . $game->game_image) }}" width="150" />
+
+                </td>
 
 
             </div>
