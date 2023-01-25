@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('role_id')->unsigned();
             $table->timestamps();
 
-            // add foreign keys - ids from users and roles table
+            // // add foreign keys - ids from users and roles table
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
             $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('restrict');
         });

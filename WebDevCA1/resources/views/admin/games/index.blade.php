@@ -28,7 +28,10 @@
                     {{$game->description}}
                 </p>
                 <br>
-                <img src="{{asset('public/images/' . $game->game_image) }}" width="150" />
+                <td rowspan="6">
+                    <!-- use the asset function, access the file $book->book_image in the folder storage/images -->
+                    <img src="{{asset('storage/images/' . $game->game_image) }}" width="150" />
+                </td>
 
 
             </div>
