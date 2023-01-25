@@ -40,12 +40,7 @@
                             <td class="font-bold ">Address  </td>
                             <td>{{ $publisher->address }}</td>
                         </tr>
-                        @foreach ($game->developers as $developer)
-                            <tr>
-                                <td class="font-bold ">Developer </td>
-                                <td> {{$developer->name }}</td>
-                            </tr>
-                        @endforeach
+                
 
                     </tbody>
                 </table>
