@@ -17,10 +17,18 @@
                 </h2>
                 <br>
                 <p class="mt-2">
+<<<<<<< Updated upstream
                 <h3 class="font-bold text-1xl"> <strong> Publisher Name </strong>
                     {{$game->publisher->name}}
                 </h3>
                 {{ $game->category }}
+=======
+                    {{ $game->category }} 
+                </p>
+                <br>
+                <p>
+                    {{$game->publisher}}
+>>>>>>> Stashed changes
                 </p>
                 <br>
                 <p>
